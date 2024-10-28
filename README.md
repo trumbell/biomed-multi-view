@@ -1,6 +1,6 @@
 # Introduction
 
-This repository contains the implementation of the Multi-view Molecular Embedding with Late Fusion (MMELON) architecture presented in [PRE-PRINT-URL]. MMELON combines molecular representations from three views — image, graph, and text —to learn a joint embedding that can be finetuned for downstream tasks in chemical and biological property prediction.
+This repository contains the implementation of the Multi-view Molecular Embedding with Late Fusion (MMELON) architecture presented in our [preprint](https://arxiv.org/abs/2410.19704). MMELON is a flexible approach to aggregate multiple views (sequence, image, graph) of molecules in a foundation model setting. While models based on single view representation typically performs well on some downstream tasks and not others, the multi-view model performs robustly across a wide range of property prediction tasks encompassing ligand-protein binding, molecular solubility, metabolism and toxicity. It has been applied to screen compounds against a large (> 100 targets) set of G Protein-Coupled receptors (GPCRs) to identify strong binders for 33 targets related to Alzheimer’s disease, which are validated through structure-based modeling and identification of key binding motifs (name of arXiv paper with hot link).
 
 Our model integrates:
 
@@ -16,7 +16,7 @@ _Figure: Schematic of multi-view architecture. Embeddings from three single view
 
 Our pre-training dataset comprises 200 million molecules sourced from the PubChem and ZINC22 chemical databases, ensuring diversity and relevance to downstream tasks. Each view encoder is pre-trained with self-supervised tasks tailored to capture the unique features of its representation.
 
-MMELON’s extensible architecture allows for seamless integration of additional views, making it a versatile tool for molecular representation learning. For further details, see [PRE-PRINT-URL].
+MMELON’s extensible architecture allows for seamless integration of additional views, making it a versatile tool for molecular representation learning. For further details, see [here](https://arxiv.org/abs/2410.19704).
 
 # Getting started with `biomed-multi-view`
 
@@ -43,20 +43,7 @@ export ROOT_DIR=~/biomed-multiview
 mkdir -p $ROOT_DIR
 ```
 
-### Step 2: Install anaconda3
-If you have Anconda in your system you can skip this step.
-``` bash
-cd $ROOT_DIR
-# Download the Anaconda installer
-wget https://repo.anaconda.com/archive/Anaconda3-2023.03-Linux-x86_64.sh
-
-# Run the installer
-bash Anaconda3-2023.03-Linux-x86_64.sh
-# After installation, initialize Conda:
-source activate $ROOT_DIR/anaconda3/bin/activate
-```
-
-#### Step 3: Create and activate a Conda environment
+#### Step 2: Create and activate a Conda environment
 ```bash
 conda create -y python=3.11 --prefix $ROOT_DIR/envs/biomed-multiview
 ```
@@ -65,7 +52,7 @@ Activate the environment:
 conda activate $ROOT_DIR/envs/biomed-multiview
 ```
 
-#### Step 4: Clone the repository
+#### Step 3: Clone the repository
 Navigate to the project directory and clone the repository:
 ```bash
 mkdir -p $ROOT_DIR/code
@@ -75,14 +62,14 @@ cd $ROOT_DIR/code
 git clone https://github.com/BiomedSciAI/biomed-multi-view.git
 
 # Navigate into the cloned repository
-cd biomed.multi-view
+cd biomed-multi-view
 ```
 Note: If you prefer using SSH, ensure that your SSH keys are set up with GitHub and use the following command:
 ```bash
 git clone git@github.com:BiomedSciAI/biomed-multi-view.git
 ```
 
-#### Step 5: Install package dependencies
+#### Step 4: Install package dependencies
 If you are installing in a Mac, skip this step and proceed to next step. Else, install the package in editable mode along with development dependencies:
 ``` bash
 pip install -e .['dev']
@@ -92,7 +79,7 @@ Install additional requirements:
 pip install -r requirements.txt
 ```
 
-#### Step 6: macOS-Specific instructions (Apple Silicon)
+#### Step 5: macOS-Specific instructions (Apple Silicon)
 If you are using a Mac with Apple Silicon (M1/M2/M3) and the zsh shell, you may need to disable globbing for the installation command:
 
 ``` bash
@@ -103,7 +90,7 @@ Install macOS-specific requirements optimized for Apple’s Metal Performance Sh
 pip install -r requirements-mps.txt
 ```
 
-#### Step 7:  Installation verification (optional)
+#### Step 6:  Installation verification (optional)
 Verify that the installation was successful by running unit tests
 
 ```bash
@@ -141,7 +128,8 @@ python -m unittest bmfm_sm.tests.all_tests
 
 ### Explore the pretrained and finetuned checkpoints from HuggingFace
 
-To explore the pretrained and finetuned models, please refer to the [demo notebook](notebooks/smmv_api_demo.ipynb). This notebook provides detailed examples and explanations on how to use the models effectively. You can launch the notebook from running the following command
+To explore the pretrained and finetuned models, please refer to the [demo notebook](notebooks/smmv_api_demo.ipynb). This notebook provides detailed examples and explanations on how to use the models effectively. You can launch the notebook from running the following command from a new terminal window.
+
 ```bash
 cd $ROOT_DIR/code/biomed-multi-view
 jupyter lab
@@ -154,7 +142,7 @@ Navigate to the notebooks directory in the sidepanel in the Jupyter Lab GUI to l
 
 #### Get embeddings from the pretrained model
 
-You can generate embeddings for a given molecule using the pretrained model with the following code. This is already described in cell 5.
+You can generate embeddings for a given molecule using the pretrained model with the following code. You can excute from cell 1 to 5 in the notebook run the same.
 
 ``` python
 from bmfm_sm.api.smmv_api import SmallMoleculeMultiViewModel
@@ -174,7 +162,7 @@ print(example_emb)
 This will output the embedding vector for the given molecule.
 
 #### Inference using finetuned model
-You can use the finetuned models to make predictions on new data.
+You can use the finetuned models to make predictions on new data. You can execute through cell 6 to 8 in the notebook to run the same.
 
 ``` python
 from bmfm_sm.api.smmv_api import SmallMoleculeMultiViewModel
@@ -322,12 +310,12 @@ We provide the `run-finetune` command for running finetuning and evaluation proc
 
 To see the usage options for the script, run:
 ```bash
-run_finetune --help
+run-finetune --help
 ```
 
 This will display:
 ``` bash
-Usage: run_finetune [OPTIONS]
+Usage: run-finetune [OPTIONS]
 
 Options:
   --model TEXT           Model name
@@ -344,11 +332,11 @@ Options:
 To evaluate a finetuned checkpoint on a specific dataset, use the --test option along with the --dataset parameter. For example, to evaluate on the BBBP dataset:
 
 ``` bash
-python run_finetune --test --dataset BBBP
+python run-finetune --test --dataset BBBP
 ```
 If you omit the `--dataset` option, the script will prompt you to choose a dataset:
 ```bash
-python run_finetune --test
+python run-finetune --test
 Please choose a dataset (FREESOLV, BBBP, CLINTOX, MUV, TOXCAST, QM9, BACE, LIPOPHILICITY, ESOL, HIV, TOX21, SIDER, QM7): BBBP
 ```
 This command will evaluate the finetuned checkpoint corresponding to the BBBP dataset using the test set of the `ligand_scaffold` split.
@@ -358,12 +346,12 @@ This command will evaluate the finetuned checkpoint corresponding to the BBBP da
 To finetune the pretrained model on a specific dataset, use the --fit option:
 
 ``` bash
-python run_finetune --fit --dataset BBBP
+python run-finetune --fit --dataset BBBP
 ```
 Again, if you omit the --dataset option, the script will prompt you to select one:
 
 ```bash
-python run_finetune --fit
+python run-finetune --fit
 Please choose a dataset (FREESOLV, BBBP, CLINTOX, MUV, TOXCAST, QM9, BACE, LIPOPHILICITY, ESOL, HIV, TOX21, SIDER, QM7): BBBP
 ```
 This command will start the finetuning process for the BBBP dataset using the configuration files provided in the `configs_finetune` directory.
@@ -371,5 +359,25 @@ This command will start the finetuning process for the BBBP dataset using the co
 Note: You can override default parameters using the `-o` or `--override` option. For example:
 
 ```bash
-python run_finetune --fit --dataset BBBP -o trainer.max_epochs=10
+python run-finetune --fit --dataset BBBP -o trainer.max_epochs=10
+```
+
+**Note**: If you run into out of memory errors, you can reduce the batch size using the following syntax
+
+```bash
+python run-finetune --fit --dataset BBBP -o data.init_args.batch_size=4
+```
+
+# Citations
+
+```
+@misc{suryanarayanan2024multiviewbiomedicalfoundationmodels,
+      title={Multi-view biomedical foundation models for molecule-target and property prediction},
+      author={Parthasarathy Suryanarayanan and Yunguang Qiu and Shreyans Sethi and Diwakar Mahajan and Hongyang Li and Yuxin Yang and Elif Eyigoz and Aldo Guzman Saenz and Daniel E. Platt and Timothy H. Rumbell and Kenney Ng and Sanjoy Dey and Myson Burch and Bum Chul Kwon and Pablo Meyer and Feixiong Cheng and Jianying Hu and Joseph A. Morrone},
+      year={2024},
+      eprint={2410.19704},
+      archivePrefix={arXiv},
+      primaryClass={q-bio.BM},
+      url={https://arxiv.org/abs/2410.19704},
+}
 ```
