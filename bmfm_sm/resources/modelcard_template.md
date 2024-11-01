@@ -3,7 +3,7 @@
 ---
 
 # {{ hf_ft_model_path }}
-**SmallMoleculeMultiView**, multi-view molecular foundation model.
+`biomed.sm.mv-te-84m` is a multimodal biomedical foundation model for small molecules created using **MMELON** (**M**ulti-view **M**olecular **E**mbedding with **L**ate Fusi**on**), a flexible approach to aggregate multiple views (sequence, image, graph) of molecules in a foundation model setting. While models based on single view representation typically performs well on some downstream tasks and not others, the multi-view model performs robustly across a wide range of property prediction tasks encompassing ligand-protein binding, molecular solubility, metabolism and toxicity. It has been applied to screen compounds against a large (> 100 targets) set of G Protein-Coupled receptors (GPCRs) to identify strong binders for 33 targets related to Alzheimer’s disease, which are validated through structure-based modeling and identification of key binding motifs [Multi-view biomedical foundation models for molecule-target and property prediction](https://arxiv.org/abs/2410.19704).
 
 - **Developers:** IBM Research
 - **GitHub Repository:** [{{ repo_url }}]({{ repo_url }})
@@ -13,9 +13,8 @@
 
 ## Model Description
 
-`biomed.sm.mv-te-84m` is a biomedical foundation model for small molecules created using MMELON (Multi-view Molecular Embedding with Late Fusion), a flexible approach to aggregate multiple views (sequence, image, graph) of molecules in a foundation model setting. While models based on single view representation typically performs well on some downstream tasks and not others, the multi-view model performs robustly across a wide range of property prediction tasks encompassing ligand-protein binding, molecular solubility, metabolism and toxicity. It has been applied to screen compounds against a large (> 100 targets) set of G Protein-Coupled receptors (GPCRs) to identify strong binders for 33 targets related to Alzheimer’s disease, which are validated through structure-based modeling and identification of key binding motifs [Multi-view biomedical foundation models for molecule-target and property prediction](https://arxiv.org/abs/2410.19704).
 
-Source code is made available in [this repository]({{ repo_url }}).
+Source code for the model and finetuning is made available in [this repository]({{ repo_url }}).
 
 ![SmallMoleculeMultiView Overview]({{ repo_url }}/blob/main/docs/overview.png?raw=true)
 
@@ -30,7 +29,7 @@ The embeddings from these single-view pre-trained encoders are combined using an
 The model is intended for (1) Molecular property prediction.  The pre-trained model may be fine-tuned for both regression and classification tasks. Examples include but are not limited to binding affinity, solubility and toxicity. (2)  Pre-trained model embeddings may be used as the basis for similarity measures to search a chemical library. (3) Small molecule embeddings provided by the model may be combined with protein embeddings to fine-tune on tasks that utilize both small molecule and protein representation.  (4) Select task-specific fine-tuned models are given as examples. Through listed activities, model may aid in aspects of the molecular discovery such as lead finding or optimization.
 
 
-The model’s domain of applicability is small, drug-like molecules. It intended for use with molecules less than 1000 Da molecular weight.  The MMELON approach itself may be extended to include proteins and other macromolecules but does not at present provide embeddings for such entities.  The model is at present not intended for molecular generation.  Molecules must be given as a valid SMILES string that represents a valid chemically bonded graph. Invalid inputs will impact performance or lead to error.
+The model’s domain of applicability is small, drug-like molecules. It is intended for use with molecules less than 1000 Da molecular weight.  The MMELON approach itself may be extended to include proteins and other macromolecules but does not at present provide embeddings for such entities.  The model is at present not intended for molecular generation.  Molecules must be given as a valid SMILES string that represents a valid chemically bonded graph. Invalid inputs will impact performance or lead to error.
 
 ## Usage
 
@@ -168,10 +167,6 @@ prediction = SmallMoleculeMultiViewModel.get_predictions(
 print("Prediction:", prediction)
 ```
 
-##### Output:
-```bash
-Prediction: {'prediction': [-2.53]}
-```
 
 For more advanced usage, see our detailed examples at: {{ repo_url }}
 
@@ -190,3 +185,4 @@ If you found our work useful, please consider giving a star to the repo and cite
       url={https://arxiv.org/abs/2410.19704},
 }
 ```
+c

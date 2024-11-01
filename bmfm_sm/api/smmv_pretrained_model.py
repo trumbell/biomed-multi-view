@@ -14,7 +14,20 @@ with resources.open_text("bmfm_sm.resources", "modelcard_template.md") as f:
 
 
 library_name = "SmallMoleculeMultiView"
-tags = ["chemistry", "molecules", "pytorch", "multiview"]
+tags = [
+    "drug-discovery",
+    "small-molecules",
+    "multimodal",
+    "virtual-screening",
+    "molecules",
+    "multi-view",
+    "chemistry",
+    "bio-medical",
+    "molecular-property-prediction",
+    "moleculenet",
+    "drug-target-interaction",
+    "binding-affinity-prediction",
+]
 repo_url = "https://github.com/BiomedSciAI/biomed-multi-view"
 license = "apache-2.0"
 
