@@ -27,3 +27,71 @@ jobs:
         pip install .[dev]
         python -c "import torch; print(torch.__version__)"
         pip install -r requirements.txt
+        pip install pre-commit pytest
+
+    - name: Pre-Commit Hooks
+      run: |
+        pre-commit install
+        pre-commit run --all-files --show-diff-on-failure
+
+    - name: Unit Tests
+      run: |
+        python -m unittest bmfm_sm.tests.all_tests
+
+  build-macos:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.11
+        cache: 'pip'
+    - name: Install package
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[dev]
+        python -c "import torch; print(torch.__version__)"
+        pip install -r requirements.txt
+        pip install pre-commit pytest
+
+    - name: Pre-Commit Hooks
+      run: |
+        pre-commit install
+        pre-commit run --all-files --show-diff-on-failure
+
+    - name: Unit Tests
+      run: |
+        python -m unittest bmfm_sm.tests.all_tests
+        
+  build-linux-conda:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        python-version: 3.11
+
+    - name: Install package
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[dev]
+        python -c "import torch; print(torch.__version__)"
+        pip install -r requirements.txt
+        pip install pre-commit pytest
+
+    - name: Pre-Commit Hooks
+      run: |
+        pre-commit install
+        pre-commit run --all-files --show-diff-on-failure
+
+    - name: Unit Tests
+      run: |
+        python -m unittest bmfm_sm.tests.all_tests
+        
