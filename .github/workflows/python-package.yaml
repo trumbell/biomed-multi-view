@@ -75,11 +75,11 @@ jobs:
         python -m unittest bmfm_sm.tests.all_tests
         
   build-conda:
-    name: build-${{ matrix.os }}-conda
-    runs-on: ${{ matrix.os }}
+    name: build-${{ matrix.os.os }}-conda
+    runs-on: ${{ matrix.os.os }}
     strategy:
       matrix:
-        os: ["ubuntu-latest", "macos-latest"]
+        os: [{"os": "ubuntu-latest", "req": ""}, {"os": "macos-latest", "req": "-mps"}]
         python-version: ["3.11"]
 
     defaults:
@@ -104,7 +104,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install .[dev]
         python -c "import torch; print(torch.__version__)"
-        pip install -r requirements.txt
+        pip install -r requirements${{ matrix.os.req }}.txt
         pip install pre-commit pytest
 
     - name: Pre-Commit Hooks
