@@ -17,9 +17,6 @@ jobs:
       matrix:
         os: [{"os": "ubuntu-latest", "req": ""}, {"os": "macos-latest", "req": "-mps"}]
         python-version: ["3.11"]
-    defaults:
-      run:
-        shell: bash -l {0}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.11
