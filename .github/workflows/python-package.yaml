@@ -74,9 +74,13 @@ jobs:
       run: |
         python -m unittest bmfm_sm.tests.all_tests
         
-  build-linux-conda:
-
-    runs-on: ubuntu-latest
+  build-conda:
+    name: build-${{ matrix.os }}-conda
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "macos-latest"]
+        python-version: ["3.11"]
 
     defaults:
       run:
@@ -88,7 +92,7 @@ jobs:
     - uses: conda-incubator/setup-miniconda@v3
       with:
         auto-update-conda: true
-        python-version: 3.11
+        python-version: ${{ matrix.python-version }}
         activate-environment: biomed-multiview
         auto-activate-base: false
 
